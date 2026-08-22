@@ -1,0 +1,71 @@
+# Gino Clement
+# Shell aliases (sourced from .zshrc)
+
+# --- File listing (eza with fallback to ls) ---
+if command -v eza >/dev/null; then
+  alias ls='eza'
+  alias ll='eza -l --git'
+  alias la='eza -la --git'
+  alias lt='eza --tree --level=2'
+else
+  alias ls='ls --color=auto'
+  alias ll='ls -lh'
+  alias la='ls -lah'
+fi
+
+# --- Viewing / searching ---
+command -v bat >/dev/null && alias cat='bat --paging=never'
+alias l='less'
+alias grep='grep --color=auto'
+alias v='nvim'
+alias vim='nvim'
+
+# --- Git ---
+alias ga='git add'
+alias gc='git commit -m'
+alias gco='git checkout'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gf='git fetch'
+alias gl='git pull'
+alias gm='git merge'
+alias gp='git push'
+alias gpsuo='git push --set-upstream origin'
+alias grpo='git remote prune origin'
+alias grup='git remote update --prune'
+alias gs='git status'
+alias glx='git log --graph --decorate --all --oneline'
+alias glxx='git log --graph --decorate --all'
+alias gitlog='git --no-pager log -n 20 --pretty=oneline'
+
+# --- Docker ---
+alias d='docker'
+alias dps='docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
+alias dpsa='docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Image}}"'
+alias dim='docker images'
+alias dlog='docker logs -f'
+alias dex='docker exec -it'
+alias dstats='docker stats --no-stream'
+alias dprune='docker system prune -f'
+
+# --- Docker Compose ---
+alias dc='docker compose'
+alias dcu='docker compose up -d'
+alias dcd='docker compose down'
+alias dcr='docker compose restart'
+alias dcl='docker compose logs -f'
+alias dcp='docker compose pull'
+alias dcb='docker compose build'
+alias dcup='docker compose pull && docker compose up -d'   # pull + recreate
+
+# --- Pacman ---
+alias pacu='sudo pacman -Syu'
+alias paci='sudo pacman -S'
+alias pacs='pacman -Ss'
+alias pacr='sudo pacman -Rns'
+alias pacq='pacman -Qs'
+alias orphans='pacman -Qtdq'
+
+# --- tmux ---
+alias t='tmux new -A -s main'    # attach to (or create) the main session
+alias tls='tmux ls'

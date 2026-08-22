@@ -1,3 +1,19 @@
 [user]
 	email = ginoclement@gmail.com
 	name = Gino Clement
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
+[push]
+	autoSetupRemote = true
+[pull]
+	ff = only
+[fetch]
+	prune = true
+[merge]
+	conflictStyle = zdiff3
+[diff]
+	colorMoved = default
+[alias]
+	lg = log --graph --decorate --all --oneline

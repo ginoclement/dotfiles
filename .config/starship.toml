@@ -1,0 +1,31 @@
+# Starship prompt — minimal, in the spirit of the old bash prompt:
+#   dir [branch]$
+# branch shows cyan when clean; status markers show magenta when dirty.
+
+add_newline = false
+format = '$directory$git_branch$git_status$docker_context$character'
+
+[directory]
+style = 'bold white'
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+format = ' [\[$branch\]]($style)'
+style = 'cyan'
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style))'
+style = 'magenta'
+
+[docker_context]
+format = ' [🐳 $context]($style)'
+style = 'blue'
+only_with_files = true
+
+[character]
+success_symbol = '[\$](bold white)'
+error_symbol = '[\$](bold red)'
+
+[cmd_duration]
+disabled = true
