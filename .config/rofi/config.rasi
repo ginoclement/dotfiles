@@ -1,0 +1,31 @@
+// ~/.config/rofi/config.rasi — Gino Clement
+// Modes: apps, run, window switcher, ssh (from ~/.ssh/config), calculator
+
+configuration {
+    modi: "drun,run,window,ssh,calc";
+
+    // Launching
+    show-icons: false;
+    terminal: "konsole";
+    drun-display-format: "{name}";
+
+    // SSH: only hosts from ~/.ssh/config, opened in a terminal
+    ssh-client: "ssh";
+    ssh-command: "{terminal} -e {ssh-client} {host}";
+    parse-hosts: false;
+    parse-known-hosts: false;
+
+    // Matching
+    matching: "fuzzy";
+    sort: true;
+    sorting-method: "fzf";
+
+    // Labels
+    display-drun: "Apps";
+    display-run: "Run";
+    display-window: "Windows";
+    display-ssh: "SSH";
+    display-calc: "Calc";
+}
+
+@theme "gino-dark"

@@ -15,7 +15,8 @@ cd ~/dotfiles
 `--packages` flag installs everything needed via pacman:
 
 zsh, zsh-autosuggestions, zsh-syntax-highlighting, zsh-completions, tmux,
-neovim, git, starship, fzf, zoxide, bat, eza, ripgrep, fd
+neovim, git, starship, fzf, zoxide, bat, eza, ripgrep, fd, rofi-wayland,
+rofi-calc
 
 Since the files are symlinks, editing them in the repo takes effect immediately —
 commit and push to sync changes.
@@ -29,6 +30,7 @@ commit and push to sync changes.
 | `.tmux.conf` | Ctrl-Space prefix, mouse support, TPM with resurrect + continuum (sessions survive reboots) |
 | `.config/starship.toml` | Minimal prompt: `dir [branch]$` — cyan branch, magenta when dirty |
 | `.config/nvim/init.lua` | Neovim config carried over from the old `.vimrc`, plugin-free |
+| `.config/rofi/` | Launcher config + dark minimal theme (`config.rasi`, `gino-dark.rasi`) and `powermenu.sh` |
 | `.gitconfig` | User info plus sane modern defaults (`push.autoSetupRemote`, `fetch.prune`, zdiff3 conflicts) |
 
 ## Cheat sheet
@@ -48,3 +50,20 @@ commit and push to sync changes.
 - `z <partial-dir>` — jump to a frequently used directory (zoxide)
 - `dcu` / `dcd` / `dcl` — compose up/down/logs; `dps` — readable `docker ps`
 - `pacu` — full system update
+
+**rofi**
+
+Modes: Apps, Run, Windows, SSH (hosts from `~/.ssh/config`), Calc. Switch
+modes inside rofi with `Ctrl+Tab`.
+
+Bind the keys yourself in System Settings → Shortcuts → Add New → Command
+(KDE), or your WM config:
+
+- `rofi -show drun` — app launcher (suggested: `Meta+Space`)
+- `rofi -show window` — window switcher (suggested: `Meta+Tab`)
+- `~/.config/rofi/powermenu.sh` — lock/logout/suspend/reboot/shutdown
+  (suggested: `Meta+Escape`)
+
+The `rofi-wayland` package runs on both KDE Wayland and X11 sessions. Check
+which you're on with `echo $XDG_SESSION_TYPE`. The calculator mode
+(`rofi -show calc`) needs `rofi-calc`, installed by `install.sh --packages`.

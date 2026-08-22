@@ -1,0 +1,93 @@
+// gino-dark — minimal dark theme, cyan accent to match the shell prompt/tmux
+
+* {
+    bg:      #1a1b1e;
+    bg-alt:  #26282c;
+    fg:      #d8d8d8;
+    fg-dim:  #6f7178;
+    accent:  #4fd6c9;
+    urgent:  #d75f87;
+
+    background-color: transparent;
+    text-color: @fg;
+    font: "monospace 12";
+}
+
+window {
+    background-color: @bg;
+    border: 2px;
+    border-color: @accent;
+    border-radius: 8px;
+    width: 600px;
+    location: center;
+    padding: 14px;
+}
+
+mainbox {
+    spacing: 12px;
+}
+
+inputbar {
+    children: [prompt, entry];
+    background-color: @bg-alt;
+    border-radius: 6px;
+    padding: 10px 12px;
+    spacing: 8px;
+}
+
+prompt {
+    text-color: @accent;
+}
+
+entry {
+    placeholder: "Search…";
+    placeholder-color: @fg-dim;
+}
+
+listview {
+    lines: 8;
+    fixed-height: false;
+    scrollbar: false;
+    spacing: 2px;
+}
+
+element {
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+element selected.normal {
+    background-color: @accent;
+    text-color: @bg;
+}
+
+element urgent {
+    text-color: @urgent;
+}
+
+element-text {
+    text-color: inherit;
+}
+
+// Mode switcher (Ctrl+Tab / Shift+arrows between Apps/Run/Windows/SSH/Calc)
+mode-switcher {
+    spacing: 8px;
+}
+
+button {
+    padding: 6px 10px;
+    border-radius: 6px;
+    background-color: @bg-alt;
+    text-color: @fg-dim;
+}
+
+button selected {
+    background-color: @accent;
+    text-color: @bg;
+}
+
+message {
+    background-color: @bg-alt;
+    border-radius: 6px;
+    padding: 8px 12px;
+}

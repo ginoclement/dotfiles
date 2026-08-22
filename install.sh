@@ -14,6 +14,7 @@ PACKAGES=(
   tmux neovim git
   starship fzf zoxide
   bat eza ripgrep fd
+  rofi-wayland rofi-calc   # rofi-wayland works on both X11 and Wayland sessions
 )
 
 install_packages() {
@@ -54,6 +55,7 @@ link .tmux.conf           "$HOME/.tmux.conf"
 link .gitconfig           "$HOME/.gitconfig"
 link .config/starship.toml "$HOME/.config/starship.toml"
 link .config/nvim         "$HOME/.config/nvim"
+link .config/rofi         "$HOME/.config/rofi"
 
 if [ "$(basename "$SHELL")" != "zsh" ] && command -v zsh >/dev/null; then
   echo
