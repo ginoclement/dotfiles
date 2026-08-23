@@ -17,7 +17,12 @@ cd ~/dotfiles
 
 zsh, zsh-autosuggestions, zsh-syntax-highlighting, zsh-completions, tmux,
 neovim, git, starship, fzf, zoxide, bat, eza, ripgrep, fd, rofi-wayland,
-rofi-calc, kitty, conky, ttf-jetbrains-mono-nerd
+rofi-calc, kitty, conky, ttf-jetbrains-mono-nerd, lazygit, lazydocker,
+git-delta, btop, jq, yq, tealdeer
+
+From the AUR (via `pamac build`), not handled by the script: `vscodium-bin`
+(the settings.json here is linked into place for it), `spicetify-cli` for
+Spotify theming.
 
 Since the files are symlinks, editing them in the repo takes effect immediately —
 commit and push to sync changes.
@@ -35,6 +40,7 @@ commit and push to sync changes.
 | `.config/kitty/kitty.conf` | Terminal themed to match gino-dark, JetBrains Mono Nerd Font, cwd-preserving tabs |
 | `.config/conky/conky.conf` | Desktop stats: clock, CPU/mem/disk, network, running docker containers |
 | `.config/autostart/conky.desktop` | Starts conky on login |
+| `.config/VSCodium/User/settings.json` | VSCodium defaults: Nerd Font, zsh terminal, 2-space yaml/json |
 | `.gitconfig` | User info plus sane modern defaults (`push.autoSetupRemote`, `fetch.prune`, zdiff3 conflicts) |
 
 ## Cheat sheet
@@ -46,6 +52,7 @@ commit and push to sync changes.
 - `Alt+arrows` — move between panes, no prefix needed
 - `Shift+Left/Right` — previous/next window
 - `prefix r` — reload config, `prefix I` — install/update plugins
+- `prefix g` — lazygit popup, `prefix D` — lazydocker popup (in current dir)
 - Sessions auto-save and restore across reboots (continuum)
 
 **shell**
@@ -53,6 +60,8 @@ commit and push to sync changes.
 - `Ctrl-R` — fuzzy history search, `Ctrl-T` — fuzzy file search, `Alt-C` — fuzzy cd
 - `z <partial-dir>` — jump to a frequently used directory (zoxide)
 - `dcu` / `dcd` / `dcl` — compose up/down/logs; `dps` — readable `docker ps`
+- `lg` — lazygit, `lzd` — lazydocker; `git diff` output is rendered by delta
+- `tldr <cmd>` — quick usage examples; `btop` — system monitor
 - `pacu` — full system update
 
 **rofi**

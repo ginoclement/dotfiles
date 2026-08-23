@@ -1,0 +1,36 @@
+{
+    // Look — matches the gino-dark terminal setup
+    "workbench.colorTheme": "Default Dark Modern",
+    "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
+    "editor.fontSize": 13,
+    "editor.fontLigatures": true,
+    "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font', monospace",
+    "terminal.integrated.fontSize": 12,
+    "terminal.integrated.defaultProfile.linux": "zsh",
+
+    // Editor behavior
+    "editor.tabSize": 4,
+    "editor.renderWhitespace": "trailing",
+    "editor.rulers": [100],
+    "editor.minimap.enabled": false,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.formatOnSave": false,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+
+    // Git
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+
+    // YAML/compose files get 2-space indent like the nvim config
+    "[yaml]": { "editor.tabSize": 2 },
+    "[json]": { "editor.tabSize": 2 },
+    "[jsonc]": { "editor.tabSize": 2 },
+
+    // Quieter UI
+    "workbench.startupEditor": "none",
+    "explorer.confirmDelete": true,
+    "explorer.confirmDragAndDrop": false,
+    "window.titleBarStyle": "custom"
+}

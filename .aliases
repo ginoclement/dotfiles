@@ -38,6 +38,10 @@ alias glx='git log --graph --decorate --all --oneline'
 alias glxx='git log --graph --decorate --all'
 alias gitlog='git --no-pager log -n 20 --pretty=oneline'
 
+# --- TUIs ---
+alias lg='lazygit'
+alias lzd='lazydocker'
+
 # --- Docker ---
 alias d='docker'
 alias dps='docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'

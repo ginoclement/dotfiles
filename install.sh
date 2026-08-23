@@ -16,6 +16,7 @@ PACKAGES=(
   bat eza ripgrep fd
   rofi-wayland rofi-calc   # rofi-wayland works on both X11 and Wayland sessions
   kitty conky ttf-jetbrains-mono-nerd
+  lazygit lazydocker git-delta btop jq yq tealdeer
 )
 
 install_packages() {
@@ -60,6 +61,7 @@ link .config/rofi         "$HOME/.config/rofi"
 link .config/kitty        "$HOME/.config/kitty"
 link .config/conky        "$HOME/.config/conky"
 link .config/autostart/conky.desktop "$HOME/.config/autostart/conky.desktop"
+link .config/VSCodium/User/settings.json "$HOME/.config/VSCodium/User/settings.json"
 
 if [ "$(basename "$SHELL")" != "zsh" ] && command -v zsh >/dev/null; then
   echo
