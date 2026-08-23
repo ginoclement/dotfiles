@@ -6,7 +6,7 @@ configuration {
 
     // Launching
     show-icons: false;
-    terminal: "konsole";
+    terminal: "kitty";
     drun-display-format: "{name}";
 
     // SSH: only hosts from ~/.ssh/config, opened in a terminal

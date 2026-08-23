@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Conky
+Comment=Desktop system monitor
+Exec=conky --daemonize --pause=5
+StartupNotify=false
+Terminal=false
+X-KDE-autostart-after=panel

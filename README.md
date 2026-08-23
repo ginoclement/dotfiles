@@ -1,11 +1,12 @@
 # dotfiles
 
-Dotfiles for Manjaro: zsh + starship + tmux + neovim, with a docker-heavy alias set.
+Dotfiles for Manjaro: zsh + starship + tmux + neovim + kitty + rofi + conky,
+with a docker-heavy alias set.
 
 ## Install
 
 ```bash
-git clone git@github.com:ginoclement/bash_settings.git ~/dotfiles
+git clone git@github.com:ginoclement/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh --packages
 ```
@@ -16,7 +17,7 @@ cd ~/dotfiles
 
 zsh, zsh-autosuggestions, zsh-syntax-highlighting, zsh-completions, tmux,
 neovim, git, starship, fzf, zoxide, bat, eza, ripgrep, fd, rofi-wayland,
-rofi-calc
+rofi-calc, kitty, conky, ttf-jetbrains-mono-nerd
 
 Since the files are symlinks, editing them in the repo takes effect immediately —
 commit and push to sync changes.
@@ -31,6 +32,9 @@ commit and push to sync changes.
 | `.config/starship.toml` | Minimal prompt: `dir [branch]$` — cyan branch, magenta when dirty |
 | `.config/nvim/init.lua` | Neovim config carried over from the old `.vimrc`, plugin-free |
 | `.config/rofi/` | Launcher config + dark minimal theme (`config.rasi`, `gino-dark.rasi`) and `powermenu.sh` |
+| `.config/kitty/kitty.conf` | Terminal themed to match gino-dark, JetBrains Mono Nerd Font, cwd-preserving tabs |
+| `.config/conky/conky.conf` | Desktop stats: clock, CPU/mem/disk, network, running docker containers |
+| `.config/autostart/conky.desktop` | Starts conky on login |
 | `.gitconfig` | User info plus sane modern defaults (`push.autoSetupRemote`, `fetch.prune`, zdiff3 conflicts) |
 
 ## Cheat sheet

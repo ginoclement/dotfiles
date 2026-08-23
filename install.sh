@@ -15,6 +15,7 @@ PACKAGES=(
   starship fzf zoxide
   bat eza ripgrep fd
   rofi-wayland rofi-calc   # rofi-wayland works on both X11 and Wayland sessions
+  kitty conky ttf-jetbrains-mono-nerd
 )
 
 install_packages() {
@@ -56,6 +57,9 @@ link .gitconfig           "$HOME/.gitconfig"
 link .config/starship.toml "$HOME/.config/starship.toml"
 link .config/nvim         "$HOME/.config/nvim"
 link .config/rofi         "$HOME/.config/rofi"
+link .config/kitty        "$HOME/.config/kitty"
+link .config/conky        "$HOME/.config/conky"
+link .config/autostart/conky.desktop "$HOME/.config/autostart/conky.desktop"
 
 if [ "$(basename "$SHELL")" != "zsh" ] && command -v zsh >/dev/null; then
   echo
