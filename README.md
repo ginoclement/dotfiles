@@ -18,7 +18,7 @@ cd ~/dotfiles
 zsh, zsh-autosuggestions, zsh-syntax-highlighting, zsh-completions, tmux,
 neovim, git, starship, fzf, zoxide, bat, eza, ripgrep, fd, rofi-wayland,
 rofi-calc, kitty, conky, ttf-jetbrains-mono-nerd, lazygit, lazydocker,
-git-delta, btop, jq, yq, tealdeer
+git-delta, btop, jq, yq, tealdeer, playerctl
 
 From the AUR (via `pamac build`), not handled by the script: `vscodium-bin`
 (the settings.json here is linked into place for it), `spicetify-cli` for
@@ -38,7 +38,8 @@ commit and push to sync changes.
 | `.config/nvim/init.lua` | Neovim config carried over from the old `.vimrc`, plugin-free |
 | `.config/rofi/` | Launcher config + dark minimal theme (`config.rasi`, `gino-dark.rasi`) and `powermenu.sh` |
 | `.config/kitty/kitty.conf` | Terminal themed to match gino-dark, JetBrains Mono Nerd Font, cwd-preserving tabs |
-| `.config/conky/conky.conf` | Desktop stats: clock, CPU/mem/disk, network, running docker containers |
+| `.config/conky/conky.conf` | Desktop stats: clock, CPU/mem/disk, network, docker containers, battery, now playing with album art |
+| `.config/conky/nowplaying.sh` | Fetches track metadata + album art from Spotify/any MPRIS player via playerctl |
 | `.config/autostart/conky.desktop` | Starts conky on login |
 | `.config/VSCodium/User/settings.json` | VSCodium defaults: Nerd Font, zsh terminal, 2-space yaml/json |
 | `.gitconfig` | User info plus sane modern defaults (`push.autoSetupRemote`, `fetch.prune`, zdiff3 conflicts) |

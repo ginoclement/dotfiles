@@ -17,6 +17,7 @@ PACKAGES=(
   rofi-wayland rofi-calc   # rofi-wayland works on both X11 and Wayland sessions
   kitty conky ttf-jetbrains-mono-nerd
   lazygit lazydocker git-delta btop jq yq tealdeer
+  playerctl   # MPRIS control for the conky now-playing section
 )
 
 install_packages() {
