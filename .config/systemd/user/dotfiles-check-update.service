@@ -1,0 +1,8 @@
+[Unit]
+Description=Check the dotfiles repo for upstream updates
+# If you clone the repo somewhere other than ~/dotfiles, either edit the
+# ExecStart path below or add: Environment=DOTFILES_DIR=/path/to/it
+
+[Service]
+Type=oneshot
+ExecStart=%h/dotfiles/bin/check-updates.sh

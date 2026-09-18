@@ -64,11 +64,12 @@ command -v starship >/dev/null && eval "$(starship init zsh)"
 # --- Dotfiles update check ---
 # Only runs for a genuinely new terminal window (guarded by the same
 # "not already inside tmux" check as the tmux auto-launch below), so it
-# can't nag you on every pane split. Reads a cached status file instead of
-# hitting the network directly — see bin/check-updates.sh for why — then
-# kicks off that script in the background to refresh the cache for next
-# time. You'll only ever be prompted based on the *previous* background
-# check's result, so opening a terminal never waits on the network.
+# can't nag you on every pane split. Always reads a cached status file
+# instead of hitting the network directly. That cache's primary source of
+# truth is the hourly dotfiles-check-update.timer (systemd --user); this
+# block just also kicks the same check script in the background as a
+# best-effort top-up. Either way, opening a terminal never waits on the
+# network — see bin/check-updates.sh for the actual check logic.
 if [[ -o interactive ]] && [[ -z "$TMUX" ]]; then
     DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
     DOTFILES_STATUS="$HOME/.cache/dotfiles/update-status"

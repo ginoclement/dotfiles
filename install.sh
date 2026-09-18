@@ -63,6 +63,14 @@ link .config/kitty        "$HOME/.config/kitty"
 link .config/conky        "$HOME/.config/conky"
 link .config/autostart/conky.desktop "$HOME/.config/autostart/conky.desktop"
 link .config/VSCodium/User/settings.json "$HOME/.config/VSCodium/User/settings.json"
+link .config/systemd/user/dotfiles-check-update.service "$HOME/.config/systemd/user/dotfiles-check-update.service"
+link .config/systemd/user/dotfiles-check-update.timer   "$HOME/.config/systemd/user/dotfiles-check-update.timer"
+
+if command -v systemctl >/dev/null; then
+  echo "==> Enabling hourly dotfiles update check (systemd --user timer)"
+  systemctl --user daemon-reload
+  systemctl --user enable --now dotfiles-check-update.timer
+fi
 
 if [ "$(basename "$SHELL")" != "zsh" ] && command -v zsh >/dev/null; then
   echo

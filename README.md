@@ -32,11 +32,33 @@ commit and push to sync changes.
 Opening a new terminal window checks for upstream commits you don't have
 locally yet and, if there are any, asks whether to `git pull && ./install.sh`
 right there. This only fires for an actual new terminal window (not every
-tmux pane), and it never delays opening a terminal: the check itself runs
-in the background at most once every 4 hours (`bin/check-updates.sh`) and
-`.zshrc` only ever reads that cached result. A brand new package added to
-`install.sh` still needs `./install.sh --packages` run manually — the
-prompt only re-links config files.
+tmux pane), and it never delays opening a terminal — `.zshrc` only ever
+reads a cached status file, it never touches the network itself.
+
+That cache is kept fresh by an **hourly `systemd --user` timer**
+(`dotfiles-check-update.timer`, enabled automatically by `install.sh`), so
+the status is current even on a day you never open a terminal. `.zshrc`
+also kicks off the same check script in the background on each new
+terminal window as a top-up, harmless since the script debounces
+near-simultaneous runs.
+
+The check itself is two-stage for speed: `git ls-remote` — a single
+lightweight round-trip with no object transfer — asks whether the branch
+moved at all; only if it has does the script do a real `git fetch` to get
+an exact commit count for the prompt. So the common case (nothing new)
+costs almost nothing.
+
+Useful commands:
+
+```bash
+systemctl --user status dotfiles-check-update.timer   # confirm it's running
+systemctl --user list-timers dotfiles-check-update.timer  # see next run time
+journalctl --user -u dotfiles-check-update.service     # check run history
+systemctl --user disable --now dotfiles-check-update.timer  # turn it off
+```
+
+A brand new package added to `install.sh` still needs `./install.sh
+--packages` run manually — the update prompt only re-links config files.
 
 ## What's inside
 
@@ -53,7 +75,8 @@ prompt only re-links config files.
 | `.config/conky/nowplaying.sh` | Fetches track metadata + album art from Spotify/any MPRIS player via playerctl |
 | `.config/autostart/conky.desktop` | Starts conky on login |
 | `.config/VSCodium/User/settings.json` | VSCodium defaults: Nerd Font, zsh terminal, 2-space yaml/json |
-| `bin/check-updates.sh` | Background, rate-limited check for upstream dotfiles commits (see below) |
+| `bin/check-updates.sh` | Checks for upstream dotfiles commits; run hourly by the systemd timer below (see below) |
+| `.config/systemd/user/dotfiles-check-update.{service,timer}` | Hourly `systemd --user` timer that runs the check even with no terminal open |
 | `.gitconfig` | User info plus sane modern defaults (`push.autoSetupRemote`, `fetch.prune`, zdiff3 conflicts) |
 
 ## Cheat sheet

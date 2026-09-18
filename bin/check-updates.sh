@@ -3,11 +3,19 @@
 # Checks whether the dotfiles repo has commits upstream that aren't local
 # yet, and writes the result to a status file that .zshrc reads on startup.
 #
-# Deliberately NOT called synchronously from the shell prompt: a `git
-# fetch` over the network would add lag (or hang) to every single new
-# terminal. Instead .zshrc backgrounds this script and only ever reads the
-# cached result, and this script rate-limits itself so it hits the network
-# at most once per $CHECK_INTERVAL regardless of how many terminals you open.
+# Called two ways, both of which avoid ever blocking a shell on the
+# network: an hourly systemd --user timer (dotfiles-check-update.timer)
+# runs this unconditionally, and .zshrc also backgrounds it once per new
+# terminal window as a best-effort top-up. $CHECK_INTERVAL below is just a
+# short debounce so two near-simultaneous triggers (e.g. two terminals
+# opened at once) don't both hit the network — it is NOT what controls the
+# hourly cadence; the systemd timer does that.
+#
+# The actual check is two-stage for speed: `git ls-remote` is a single
+# stateless round-trip that returns the branch's current SHA with no
+# object transfer, so the common case (nothing changed) is nearly free.
+# Only when the SHA has actually moved do we do a real `git fetch`, to get
+# an accurate "N commits behind" count for the prompt.
 #
 set -uo pipefail
 
@@ -15,7 +23,7 @@ DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
 STATE_DIR="$HOME/.cache/dotfiles"
 STATUS_FILE="$STATE_DIR/update-status"
 STAMP_FILE="$STATE_DIR/last-check"
-CHECK_INTERVAL=$((4 * 60 * 60))  # seconds between network checks
+CHECK_INTERVAL=$((5 * 60))  # debounce only, see note above
 
 mkdir -p "$STATE_DIR"
 [ -d "$DOTFILES_DIR/.git" ] || exit 0
@@ -31,8 +39,20 @@ touch "$STAMP_FILE"
 
 cd "$DOTFILES_DIR" || exit 0
 branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || exit 0
-timeout 5 git fetch --quiet origin "$branch" 2>/dev/null || exit 0
+local_sha=$(git rev-parse HEAD 2>/dev/null) || exit 0
+remote_sha=$(timeout 5 git ls-remote origin "refs/heads/$branch" 2>/dev/null | cut -f1)
 
+if [ -z "$remote_sha" ]; then
+    exit 0  # network/auth failure — leave the existing cached status alone
+fi
+
+if [ "$remote_sha" = "$local_sha" ]; then
+    echo "current" > "$STATUS_FILE"
+    exit 0
+fi
+
+# SHA moved: fetch (still quiet/bounded) to get a real commit count
+timeout 5 git fetch --quiet origin "$branch" 2>/dev/null || exit 0
 behind=$(git rev-list --count "HEAD..origin/$branch" 2>/dev/null || echo 0)
 
 if [ "${behind:-0}" -gt 0 ]; then
