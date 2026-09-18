@@ -61,6 +61,33 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 # --- Starship prompt ---
 command -v starship >/dev/null && eval "$(starship init zsh)"
 
+# --- Dotfiles update check ---
+# Only runs for a genuinely new terminal window (guarded by the same
+# "not already inside tmux" check as the tmux auto-launch below), so it
+# can't nag you on every pane split. Reads a cached status file instead of
+# hitting the network directly — see bin/check-updates.sh for why — then
+# kicks off that script in the background to refresh the cache for next
+# time. You'll only ever be prompted based on the *previous* background
+# check's result, so opening a terminal never waits on the network.
+if [[ -o interactive ]] && [[ -z "$TMUX" ]]; then
+    DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
+    DOTFILES_STATUS="$HOME/.cache/dotfiles/update-status"
+
+    if [[ -f "$DOTFILES_STATUS" ]] && [[ "$(<"$DOTFILES_STATUS")" == behind:* ]]; then
+        IFS=: read -r _ df_count df_branch < "$DOTFILES_STATUS"
+        echo "dotfiles: $df_count update(s) available on $df_branch."
+        if read -q "?Install now? [y/N] "; then
+            echo
+            (cd "$DOTFILES_DIR" && git pull --ff-only && ./install.sh) \
+                && echo "current" > "$DOTFILES_STATUS"
+        else
+            echo
+        fi
+    fi
+
+    [[ -x "$DOTFILES_DIR/bin/check-updates.sh" ]] && "$DOTFILES_DIR/bin/check-updates.sh" &!
+fi
+
 # --- Auto-launch tmux ---
 # Every new terminal (kitty, konsole, whatever) lands in the "main" tmux
 # session instead of a bare shell. `-A` means "attach if it exists, create

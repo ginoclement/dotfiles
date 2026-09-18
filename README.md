@@ -27,6 +27,17 @@ Spotify theming.
 Since the files are symlinks, editing them in the repo takes effect immediately —
 commit and push to sync changes.
 
+## Update checks
+
+Opening a new terminal window checks for upstream commits you don't have
+locally yet and, if there are any, asks whether to `git pull && ./install.sh`
+right there. This only fires for an actual new terminal window (not every
+tmux pane), and it never delays opening a terminal: the check itself runs
+in the background at most once every 4 hours (`bin/check-updates.sh`) and
+`.zshrc` only ever reads that cached result. A brand new package added to
+`install.sh` still needs `./install.sh --packages` run manually — the
+prompt only re-links config files.
+
 ## What's inside
 
 | File | Purpose |
@@ -42,6 +53,7 @@ commit and push to sync changes.
 | `.config/conky/nowplaying.sh` | Fetches track metadata + album art from Spotify/any MPRIS player via playerctl |
 | `.config/autostart/conky.desktop` | Starts conky on login |
 | `.config/VSCodium/User/settings.json` | VSCodium defaults: Nerd Font, zsh terminal, 2-space yaml/json |
+| `bin/check-updates.sh` | Background, rate-limited check for upstream dotfiles commits (see below) |
 | `.gitconfig` | User info plus sane modern defaults (`push.autoSetupRemote`, `fetch.prune`, zdiff3 conflicts) |
 
 ## Cheat sheet
