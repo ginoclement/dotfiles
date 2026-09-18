@@ -48,13 +48,37 @@ commit and push to sync changes.
 
 **tmux** (prefix is `Ctrl-Space`)
 
-- `t` — attach to (or create) the `main` session
+Every new terminal window auto-attaches to a session named `main` (set up
+in `.zshrc`) — you're always inside tmux, no need to type `tmux` yourself.
+Opening a second terminal window attaches to that *same* session rather
+than starting a separate one — see "one session vs many" below before you
+get confused by two windows showing identical content.
+
 - `prefix |` / `prefix -` — split right / down (keeps current directory)
 - `Alt+arrows` — move between panes, no prefix needed
 - `Shift+Left/Right` — previous/next window
+- `prefix c` — new window; `prefix ,` — rename the current window
+- `prefix d` — detach (the session keeps running in the background)
+- `prefix z` — zoom the current pane to fullscreen, press again to unzoom
+- `prefix [` — enter copy/scroll mode (vi-style: `hjkl` to move, `/` to
+  search, `v` to start a selection, `y` to copy, `q` to exit)
 - `prefix r` — reload config, `prefix I` — install/update plugins
 - `prefix g` — lazygit popup, `prefix D` — lazydocker popup (in current dir)
-- Sessions auto-save and restore across reboots (continuum)
+- `prefix ?` — list every keybinding currently active
+- Sessions auto-save and restore across reboots (continuum) — so a reboot
+  or accidental tmux crash doesn't lose your panes and running commands
+
+**One session vs many.** `main` is one shared workspace: every terminal
+window is a *client* looking at the same session, so they mirror each
+other — typing in one changes what the other shows too, and closing a
+window doesn't end the session (`prefix d` or just closing the terminal
+both just detach; the session and everything running in it survives).
+That's the point — reopen a terminal days later and your panes, running
+builds, and SSH connections are exactly where you left them. If instead
+you want separate, independent sessions per project (so two terminal
+windows don't show the same thing), name them explicitly instead of
+relying on auto-attach: `tmux new -A -s myproject`, `tmux ls` to see
+what's running, `prefix s` to switch between sessions without detaching.
 
 **shell**
 

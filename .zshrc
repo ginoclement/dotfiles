@@ -60,3 +60,14 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
 # --- Starship prompt ---
 command -v starship >/dev/null && eval "$(starship init zsh)"
+
+# --- Auto-launch tmux ---
+# Every new terminal (kitty, konsole, whatever) lands in the "main" tmux
+# session instead of a bare shell. `-A` means "attach if it exists, create
+# it if not" — so this always converges on one persistent session.
+# Guards: only for interactive shells, not already inside tmux, and not
+# inside a VS Code / IDE integrated terminal (those handle their own
+# multiplexing and get confused by this).
+if [[ -o interactive ]] && [[ -z "$TMUX" ]] && [[ -z "$VSCODE_INJECTION" ]] && command -v tmux >/dev/null; then
+    exec tmux new-session -A -s main
+fi
